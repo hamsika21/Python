@@ -1,17 +1,26 @@
 if __name__ == '__main__':
+    # Problem Statement:
+    # Given an integer, n, perform the following conditional actions:
+    # - If n is odd, print "Weird"
+    # - If n is even and in the inclusive range of 2 to 5, print "Not Weird"
+    # - If n is even and in the inclusive range of 6 to 20, print "Weird"
+    # - If n is even and greater than 20, print "Not Weird"
+    
     n = int(input().strip())
     
-    if n < 0 or n > 100:
+    # Ensure n is within the valid range
+    if n < 1 or n > 100:
         print("n should be between 1 and 100")
-    
-    if n%2 == 1:
-        print("Weird")
-        
-    elif n>1 and n<6:
-        print("Not Weird")
-        
-    elif n>5 and n<21:
-        print("Weird")
-    
-    elif n>20:
-        print("Not Weird")
+    else:
+        # Check if n is odd
+        if n % 2 == 1:
+            print("Weird")
+        # Check if n is even and in the inclusive range of 2 to 5
+        elif 2 <= n <= 5:
+            print("Not Weird")
+        # Check if n is even and in the inclusive range of 6 to 20
+        elif 6 <= n <= 20:
+            print("Weird")
+        # Check if n is even and greater than 20
+        elif n > 20:
+            print("Not Weird")
