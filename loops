@@ -1,0 +1,12 @@
+if __name__ == '__main__':
+    # Problem Statement:
+    # The provided code stub reads an integer, n, from STDIN.
+    # For all non-negative integers i < n, print i^2.
+
+    # Read the integer from standard input
+    n = int(input())
+    
+    # Loop through all non-negative integers less than n
+    for i in range(n):
+        # Print the square of the current integer
+        print(i * i)
