@@ -1,0 +1,10 @@
+#madlibs
+
+adj = input("Adjective: ")
+verb1 = input("Verb: ")
+verb2 = input("Verb: ")
+famous_person = input("Famous Person: ")
+
+madlib = f"Going on an adventure can be so {adj}! Sometimes, you just have to {verb1} through the unknown. \
+And remember, always {verb2} like you're as bold as {famous_person}!"
+print(madlib)
