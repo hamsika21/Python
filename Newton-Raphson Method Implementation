@@ -1,0 +1,60 @@
+#%% Load libraries
+import numpy as np
+import matplotlib.pyplot as plt
+from sympy import *
+
+#%% Functions
+
+# Define functions
+x = Symbol('x')
+fx = x**2 + 2*x - 3
+fx1 = fx.diff()     # First derivative of fx
+
+# Convert to numericals
+fx_numeric = lambdify(x, fx, 'numpy')
+fx1_numeric = lambdify(x, fx1, 'numpy')
+
+#%% Newton-Rhapson approximation
+
+N = 100      # No. of iterations
+approx = [10]    # First guess
+
+for i in range(N):
+    fx_n = fx_numeric(approx[i])
+    fx1_n = fx1_numeric(approx[i]) 
+    
+    if fx_n == 0:
+        print(f"Derivative reached zero --> Stopping iteration at i = {i}")
+        
+        break
+    
+    xn = approx[i] - fx_n/fx1_n
+    approx.append(xn)
+
+print(f"Last approximation = {approx[-1]}")
+
+#%% Plotting
+
+x_vals = np.linspace(-10, 10, 400)
+y_vals = fx_numeric(x_vals)
+
+plt.figure(figsize = (8,6))
+plt.plot(x_vals, y_vals, label = "f(x)", color='blue')
+plt.axhline(0, color='black', linewidth=1)  # x-axis
+plt.axvline(0, color='black', linewidth=1)  # y-axis
+
+# Plot Newton-Raphson steps
+for i in range(len(approx) - 1):
+    x_n = approx[i]
+    y_n = fx_numeric(x_n)
+
+    # Plot the approximation point
+    plt.scatter(x_n, y_n, color='red')
+
+plt.scatter(approx[-1], 0, color='green', marker='x', s=200, label="Final Root Approximation")
+
+plt.xlabel("x")
+plt.ylabel("f(x)")
+plt.legend()
+plt.grid()
+plt.show()
