@@ -1,0 +1,103 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Exponential growth function
+def exponential_growth(N0, r, t):
+    return N0 * np.exp(r * t)
+
+# Logistic growth function with carrying capacity K
+def logistic_growth(N0, r, t, K):
+    return K / (1 + ((K - N0) / N0) * np.exp(-r * t))
+
+# Calculate doubling time
+def doubling_time(r):
+    return np.log(2) / r
+
+# Time (in hours)
+time = np.linspace(0, 10, 100)  # Simulate for 10 hours
+key_times = [2, 5, 10]  # Time points for comparison
+
+# Initial population and carrying capacity
+N0 = 10  
+K = 10000  
+
+# Different growth rates
+growth_rates = [0.1, 0.5, 1.0]
+labels = ["Slow Growth (r = 0.1)", "Moderate Growth (r = 0.5)", "Fast Growth (r = 1.0)"]
+
+# Print population values at key times
+print("\nPopulation Comparison at Specific Time Points")
+print("-------------------------------------------------")
+print("{:<25} {:<10} {:<10} {:<10}".format("Growth Model", "t=2", "t=5", "t=10"))
+print("-------------------------------------------------")
+
+for r, label in zip(growth_rates, labels):
+    exp_values = [exponential_growth(N0, r, t) for t in key_times]
+    log_values = [logistic_growth(N0, r, t, K) for t in key_times]
+
+    print("{:<25} {:<10.2f} {:<10.2f} {:<10.2f}".format(label + " (Exp)", *exp_values))
+    print("{:<25} {:<10.2f} {:<10.2f} {:<10.2f}".format(label + " (Log)", *log_values))
+    print("-------------------------------------------------")
+
+# Plot exponential growth
+plt.figure(figsize=(8, 5))
+for r, label in zip(growth_rates, labels):
+    population_exp = exponential_growth(N0, r, time)
+    plt.plot(time, population_exp, linestyle="solid", label=label + " (Exponential)")
+ 
+plt.xlabel("Time (hours)")
+plt.ylabel("Bacterial Population")
+plt.title("Bacterial Growth: Exponential")
+plt.legend()
+plt.grid(True)
+plt.show()
+
+
+# Plot logistic growth
+plt.figure(figsize=(8, 5))
+for r, label in zip(growth_rates, labels):
+    population_log = logistic_growth(N0, r, time, K)
+    plt.plot(time, population_log, label=label + " (Logistic)")
+    
+plt.xlabel("Time (hours)")
+plt.ylabel("Bacterial Population")
+plt.title("Bacterial Growth: Logistic")
+plt.legend()
+plt.grid(True)
+plt.show()
+
+# Plot combined exponential & logistic growth
+plt.figure(figsize=(8, 5))
+for r, label in zip(growth_rates, labels):
+    population_exp = exponential_growth(N0, r, time)
+    plt.plot(time, population_exp, linestyle="dashed", label=label + " (Exponential)")
+    
+for r, label in zip(growth_rates, labels):
+    population_log = logistic_growth(N0, r, time, K)
+    plt.plot(time, population_log, label=label + " (Logistic)")   
+
+plt.xlabel("Time (hours)")
+plt.ylabel("Bacterial Population")
+plt.title("Bacterial Growth: Exponential vs Logistic")
+plt.legend()
+plt.grid(True)
+plt.show()
+
+# Print doubling times for each growth rate
+print("\nDoubling Times for Different Growth Rates")
+print("--------------------------------------")
+for r in growth_rates:
+    print(f"Growth rate (r = {r}): Doubling time = {doubling_time(r):.2f} hours")
+
+# Plot doubling time vs growth rate
+growth_rates = np.linspace(0.25, 2.0, 8)  
+doubling_times = np.log(2) / growth_rates  
+
+plt.figure(figsize=(8, 5))
+plt.plot(growth_rates, doubling_times, marker="o", linestyle="-", color="blue")
+
+plt.xlabel("Growth Rate (r)")
+plt.ylabel("Doubling Time (hours)")
+plt.title("Doubling Time vs Growth Rate")
+plt.grid(True)
+plt.show()
